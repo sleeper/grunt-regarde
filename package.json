@@ -17,9 +17,14 @@
     "files"
   ],
   "author": "Frederick Ros",
+  "dependencies": {
+    "gaze" : "~0.3.1"
+  },
   "devDependencies": {
       "grunt": "~0.4.0",
       "mocha": "~1.7.4",
+      "mkdirp": "~0.3.1",
+      "rimraf": "~2.0.1",      
       "grunt-contrib-jshint": "~0.1.0"
   },
   "engines": {
