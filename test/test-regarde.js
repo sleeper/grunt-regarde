@@ -17,8 +17,8 @@ describe('Regarde', function (){
     regarde = new Regarde(events, watcher);
   });
 
-  it('should check each of the target has a correct config');
-  it('should filter tasks to keep only strings and arrays');
+  // it('should check each of the target has a correct config');
+  // it('should filter tasks to keep only strings and arrays');
 
   // it('should emit events if no task is given', function () {
   //   grunt.log.muted = true;
@@ -63,6 +63,6 @@ describe('Regarde', function (){
     regarde.add('*.txt', ['foo', 'bar'], true);
 
     // Simulate a file change.
-    watcher.fileChange('fred.txt')    
+    watcher.fileChange('fred.txt')
   });
 });
