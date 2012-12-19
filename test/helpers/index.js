@@ -38,8 +38,13 @@ helpers.testWatcher = function() {
 }
 util.inherits(helpers.testWatcher, events.EventEmitter);
 
+helpers.testWatcher.prototype.add = function add(pattern, cb) {
+  cb.bind(this)();
+};
+
 // Simulate a file change
 //
 helpers.testWatcher.prototype.fileChange = function fileChange(file) {
   this.emit('changed', file);
+  this.emit('all', 'changed', file);
 }

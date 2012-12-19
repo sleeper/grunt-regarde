@@ -10,6 +10,23 @@ module.exports = function (grunt) {
 
     new Regarde(grunt);
 
+    var regarde = new Regarde(grunt.event);
+
+    targets.forEach( function(t) {
+      var pattern = config[t].files;
+      var tasks = config[t].tasks;
+      var events = config[t].events;
+
+      regarde.add( pattern, tasks, events);
+
+    });
+
+    grunt.event.on('all', function(status, filepath, tasks) {
+      // Run or spawn the tasks
+    });
+
+
+
     var targets = target ? [target] : Object.keys(config);
     var done = this.async();
 
