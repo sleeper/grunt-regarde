@@ -8,7 +8,8 @@ module.exports = function (grunt) {
     var name = this.name;
     var config = grunt.config(name);
 
-    new Regarde(grunt);
+    // new Regarde(grunt);
+    config = utils.checkConfig(config);
 
     var regarde = new Regarde(grunt.event);
 
@@ -23,6 +24,7 @@ module.exports = function (grunt) {
 
     grunt.event.on('all', function(status, filepath, tasks) {
       // Run or spawn the tasks
+      util.launchTasks( grunt, tasks );
     });
 
 
