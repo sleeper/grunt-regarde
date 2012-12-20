@@ -82,7 +82,27 @@ describe('Utils', function () {
     });
 
     it('should spawn the tasks when needed');
-    it('should prevent a task from blowing up the process');
+    it('should prevent a task from blowing up the process', function () {
+      var _error;
+      var task = { mark: function () {}};
+      var errorMsg = 'Error from task !';
+      var grunt = { task: {
+        run: function (t) { throw(errorMsg); },
+        current: { nameArgs: 'foo:bar' }
+      },
+      log: {
+        error: function (err) { _error = err; }
+      }
+      };
+      var myTasks = ['foo'];
+
+      assert.doesNotThrow(
+        function () {
+        utils.launchTask(grunt, myTasks, false);
+        }
+      );
+      assert.equal(_error, errorMsg);
+    });
   });
 
 });
