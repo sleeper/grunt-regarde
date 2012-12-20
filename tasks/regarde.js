@@ -8,7 +8,6 @@ module.exports = function (grunt) {
     var name = this.name;
     var config = grunt.config(name);
 
-    // new Regarde(grunt);
     config = utils.checkConfig(config);
 
     var regarde = new Regarde(grunt.event);
@@ -16,15 +15,15 @@ module.exports = function (grunt) {
     targets.forEach( function(t) {
       var pattern = config[t].files;
       var tasks = config[t].tasks;
-      var events = config[t].events;
+      var spawn = config[t].spawn;
 
-      regarde.add( pattern, tasks, events);
+      regarde.add( pattern, tasks, spawn);
 
     });
 
-    grunt.event.on('all', function(status, filepath, tasks) {
+    grunt.event.on('all', function(status, filepath, tasks, spawn) {
       // Run or spawn the tasks
-      util.launchTasks( grunt, tasks );
+      util.launchTasks( grunt, tasks, spawn );
     });
 
 

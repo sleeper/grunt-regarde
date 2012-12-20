@@ -34,7 +34,6 @@ describe('Utils', function (){
         utils.checkConfig(config);
       },
       /Invalid config for target fred: tasks is neither a string nor an Array of patterns/);
-
     });
 
     it('should filter tasks to keep only strings and arrays', function () {
@@ -62,4 +61,28 @@ describe('Utils', function (){
 
     });
   });
+
+  describe('launchTask', function () {
+    it('should run all the tasks', function () {
+      var _tasks;
+      var task = { mark: function() { }};
+      var grunt = { task: {
+        run: function(t) { _tasks = t; return task;},
+        current: { nameArgs: 'foo:bar' }
+        }
+      };
+      var myTasks = ['foo', 'bar', 'baz'];
+
+      utils.launchTask(grunt, myTasks, false);
+      assert.equal(_tasks.length, 3);
+      myTasks.forEach(function (t,i) {
+        assert.equal(_tasks[i], t);
+      });
+
+    });
+
+    it('should spawn the tasks when needed');
+    it('should prevent a task from blowing up the process');
+  });
+
 });

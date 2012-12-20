@@ -35,9 +35,10 @@ describe('Regarde', function (){
   // });
 
   it('should send event when a file is modified', function (done) {
-    events.on('regarde:file:changed', function (file, tasks) {
+    events.on('regarde:file:changed', function (file, tasks, spawn) {
       assert.equal(file, 'fred.txt');
       assert.equal(tasks.length, 0);
+      assert.ok(spawn);
       done();
     });
 
@@ -50,17 +51,18 @@ describe('Regarde', function (){
 
 
   it('should send the tasks as part of the event\'s argument', function (done){
-    events.on('regarde:file:changed', function (file, tasks) {
+    events.on('regarde:file:changed', function (file, tasks, spawn) {
       assert.equal(file, 'fred.txt');
       assert(tasks);
       assert.equal(tasks.length, 2);
       assert.equal(tasks[0], 'foo');
       assert.equal(tasks[1], 'bar');
+      assert(!spawn);
       done();
     });
 
     // var regarde = new Regarde(events, watcher);
-    regarde.add('*.txt', ['foo', 'bar'], true);
+    regarde.add('*.txt', ['foo', 'bar'], false);
 
     // Simulate a file change.
     watcher.fileChange('fred.txt')
