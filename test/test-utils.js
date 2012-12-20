@@ -81,7 +81,35 @@ describe('Utils', function () {
 
     });
 
-    it('should spawn the tasks when needed');
+    it('should spawn the tasks when needed', function () {
+      var _spawned = 0;
+      var task = { mark: function () {}};
+      var grunt = { task: {
+        run: function (t) { _tasks = t; return task; },
+        current: { nameArgs: 'foo:bar' }
+      },
+      util:
+      {spawn: function (cfg) {
+        _spawned += 1;
+        // In the test we're launched by node. hHence process.argv[0] === 'node'
+        assert.equal(cfg.cmd, "node");
+        assert.equal(cfg.opts, {cmd: __dirname});
+        // FIXME: Check the the args is containing our tasks + any command line option passed to the current process
+        assert.equal(1,2);
+      }}
+      };
+      var myTasks = ['foo', 'bar', 'baz'];
+
+      utils.launchTask(grunt, myTasks, true);
+      assert.equal(_spawned, 1);
+      // myTasks.forEach(function (t, i) {
+      //   assert.equal(_tasks[i], t);
+      // });
+
+    });
+
+
+
     it('should prevent a task from blowing up the process', function () {
       var _error;
       var task = { mark: function () {}};
