@@ -2,13 +2,13 @@
 var assert = require('assert');
 var utils = require('../lib/utils');
 
-describe('Utils', function (){
+describe('Utils', function () {
   describe('utils.checkConfig', function () {
 
-    it('should allow to have no task', function (){
+    it('should allow to have no task', function () {
       var config = {html: {files: '*.txt' }};
 
-      assert.doesNotThrow( function () {
+      assert.doesNotThrow(function () {
         utils.checkConfig(config);
       });
     });
@@ -16,21 +16,21 @@ describe('Utils', function (){
     it('should check each of the target has a correct config', function () {
       var config = {html: {}};
 
-      assert.throws( function () {
+      assert.throws(function () {
         utils.checkConfig(config);
       },
       /Invalid config for target html: files is missing/);
 
       config = {fred: { files: 3 }};
 
-      assert.throws( function () {
+      assert.throws(function () {
         utils.checkConfig(config);
       },
       /Invalid config for target fred: files is neither a string nor an Array of patterns/);
 
       config = {fred: { files: '*.txt', tasks: 3 }};
 
-      assert.throws( function () {
+      assert.throws(function () {
         utils.checkConfig(config);
       },
       /Invalid config for target fred: tasks is neither a string nor an Array of patterns/);
@@ -65,17 +65,17 @@ describe('Utils', function (){
   describe('launchTask', function () {
     it('should run all the tasks', function () {
       var _tasks;
-      var task = { mark: function() { }};
+      var task = { mark: function () {}};
       var grunt = { task: {
-        run: function(t) { _tasks = t; return task;},
+        run: function (t) { _tasks = t; return task; },
         current: { nameArgs: 'foo:bar' }
-        }
+      }
       };
       var myTasks = ['foo', 'bar', 'baz'];
 
       utils.launchTask(grunt, myTasks, false);
       assert.equal(_tasks.length, 3);
-      myTasks.forEach(function (t,i) {
+      myTasks.forEach(function (t, i) {
         assert.equal(_tasks[i], t);
       });
 

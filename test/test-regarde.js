@@ -1,17 +1,15 @@
 'use strict';
 var assert = require('assert');
 var helpers = require('./helpers');
-var fs = require('fs');
-var grunt = require('grunt');
 var EventEmitter2 = require('eventemitter2').EventEmitter2;
 var Regarde = require('../lib/regarde');
 
-describe('Regarde', function (){
+describe('Regarde', function () {
   var events;
   var watcher;
   var regarde;
 
-  beforeEach(function() {
+  beforeEach(function () {
     events = new EventEmitter2({delimiter: ':'});
     watcher = new helpers.testWatcher();
     regarde = new Regarde(events, watcher);
@@ -46,11 +44,11 @@ describe('Regarde', function (){
     regarde.add('*.txt', [], true);
 
     // Simulate a file change.
-    watcher.fileChange('fred.txt')
+    watcher.fileChange('fred.txt');
   });
 
 
-  it('should send the tasks as part of the event\'s argument', function (done){
+  it('should send the tasks as part of the event\'s argument', function (done) {
     events.on('regarde:file:changed', function (file, tasks, spawn) {
       assert.equal(file, 'fred.txt');
       assert(tasks);
@@ -65,6 +63,6 @@ describe('Regarde', function (){
     regarde.add('*.txt', ['foo', 'bar'], false);
 
     // Simulate a file change.
-    watcher.fileChange('fred.txt')
+    watcher.fileChange('fred.txt');
   });
 });

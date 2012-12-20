@@ -1,5 +1,4 @@
 'use strict';
-var path = require('path');
 var assert = require('assert');
 var grunt = require('grunt');
 var rimraf = require('rimraf');
@@ -78,7 +77,6 @@ describe('regarde task', function () {
     fs.writeFileSync('fred.txt', '1');
 
     grunt.event.on('regarde:file:changed', function (file) {
-      console.log("FRED: file:changed");
       assert.equal(file, 'fred.txt');
       done();
     });
@@ -87,10 +85,8 @@ describe('regarde task', function () {
     grunt.task.start();
 
     grunt.event.on('regarde:init:fred:done', function () {
-      console.log("FRED: here");
       // fs.writeFileSync('fred.txt', '2');
       grunt.file.write('fred.txt', '2');
-      console.log("FRED: written");
     });
   });
 

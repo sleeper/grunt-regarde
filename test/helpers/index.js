@@ -22,10 +22,10 @@ var helpers = module.exports;
 helpers.directory = function directory(dir) {
   return function directory(done) {
     process.chdir(path.join(__dirname, '..'));
-    rimraf(dir, function(err) {
-      if(err) return done(err);
-      mkdirp(dir, function(err) {
-        if(err) return done(err);
+    rimraf(dir, function (err) {
+      if (err) { return done(err); }
+      mkdirp(dir, function (err) {
+        if (err) { return done(err); }
         process.chdir(dir);
         done();
       });
@@ -33,9 +33,10 @@ helpers.directory = function directory(dir) {
   };
 };
 
-helpers.testWatcher = function() {
+helpers.testWatcher = function () {
 
-}
+};
+
 util.inherits(helpers.testWatcher, events.EventEmitter);
 
 helpers.testWatcher.prototype.add = function add(pattern, cb) {
@@ -47,4 +48,4 @@ helpers.testWatcher.prototype.add = function add(pattern, cb) {
 helpers.testWatcher.prototype.fileChange = function fileChange(file) {
   this.emit('changed', file);
   this.emit('all', 'changed', file);
-}
+};
