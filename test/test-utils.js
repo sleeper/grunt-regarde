@@ -65,16 +65,16 @@ describe('Utils', function () {
   describe('launchTask', function () {
     var grunt = require('grunt');
     var _savedTask, _savedSpawn, _savedLog;
-    beforeEach(function() {
+    beforeEach(function () {
       _savedTask = grunt.task;
       _savedSpawn = grunt.util.spawn;
       _savedLog = grunt.log;
-       });
+    });
     afterEach(function () {
       grunt.task = _savedTask;
       grunt.util.spawn = _savedSpawn;
       grunt.log = _savedLog;
-     });
+    });
 
     it('should run all the tasks', function () {
       var _tasks;
@@ -96,12 +96,11 @@ describe('Utils', function () {
     it('should spawn the tasks when needed', function () {
       var grunt = require('grunt');
       var _spawned = 0;
-      var task = { mark: function () {}};
       var myTasks = ['foo', 'bar', 'baz'];
       grunt.util.spawn = function (cfg) {
         _spawned += 1;
         // In the test we're launched by node. hHence process.argv[0] === 'node'
-        assert.equal(cfg.cmd, "node");
+        assert.equal(cfg.cmd, 'node');
         assert.ok(cfg.opts.cwd);
         assert.equal(cfg.opts.cwd, process.cwd());
         assert.ok(cfg.args.indexOf('foo') !== -1);
@@ -115,11 +114,10 @@ describe('Utils', function () {
 
     it('should prevent a task from blowing up the process', function () {
       var _error;
-      var task = { mark: function () {}};
       var errorMsg = 'Error from task !';
       var myTasks = ['foo'];
       grunt.task = {
-        run: function (t) { throw(errorMsg); },
+        run: function () { throw (errorMsg); },
         current: { nameArgs: 'foo:bar' }
       };
       grunt.log = {
@@ -129,7 +127,7 @@ describe('Utils', function () {
       assert.doesNotThrow(
         function () {
         utils.launchTask(grunt, myTasks, false);
-        }
+      }
       );
       assert.equal(_error, errorMsg);
     });

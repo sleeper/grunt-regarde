@@ -1,12 +1,10 @@
 'use strict';
 
 module.exports = function (grunt) {
-  var Gaze = require('gaze').Gaze;
-  var path = require('path');
-  var utils = require( '../lib/utils');
+  var utils = require('../lib/utils');
   var Regarde = require('../lib/regarde');
 
-  grunt.registerTask('regarde', 'Observe files on the filesystem', function (target) {
+  grunt.registerTask('regarde', 'Observe files on the filesystem', function () {
     var name = this.name;
     var config = grunt.config(name);
     var targets;
@@ -16,23 +14,23 @@ module.exports = function (grunt) {
 
     var regarde = new Regarde(grunt.event);
 
-    targets.forEach( function(t) {
+    targets.forEach(function (t) {
       var pattern = config[t].files;
       var tasks = config[t].tasks;
       var spawn = config[t].spawn;
 
-      regarde.add( pattern, tasks, spawn);
+      regarde.add(pattern, tasks, spawn);
 
     });
 
-    grunt.event.on('all', function(status, filepath, tasks, spawn) {
-      console.log("FRED");
+    grunt.event.on('all', function (status, filepath, tasks, spawn) {
+      console.log('FRED');
       // Run or spawn the tasks
-      util.launchTasks( grunt, tasks, spawn );
+      utils.launchTasks(grunt, tasks, spawn);
     });
 
     // Keep the process alive
-    setInterval(function() {}, 250);
+    setInterval(function () {}, 250);
     this.async();
   });
 };
