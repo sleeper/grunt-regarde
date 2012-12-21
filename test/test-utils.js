@@ -63,15 +63,27 @@ describe('Utils', function () {
   });
 
   describe('launchTask', function () {
+    var grunt = require('grunt');
+    var _savedTask, _savedSpawn, _savedLog;
+    beforeEach(function() {
+      _savedTask = grunt.task;
+      _savedSpawn = grunt.util.spawn;
+      _savedLog = grunt.log;
+       });
+    afterEach(function () {
+      grunt.task = _savedTask;
+      grunt.util.spawn = _savedSpawn;
+      grunt.log = _savedLog;
+     });
+
     it('should run all the tasks', function () {
       var _tasks;
       var task = { mark: function () {}};
-      var grunt = { task: {
+      var myTasks = ['foo', 'bar', 'baz'];
+      grunt.task = {
         run: function (t) { _tasks = t; return task; },
         current: { nameArgs: 'foo:bar' }
-      }
       };
-      var myTasks = ['foo', 'bar', 'baz'];
 
       utils.launchTask(grunt, myTasks, false);
       assert.equal(_tasks.length, 3);
@@ -82,47 +94,37 @@ describe('Utils', function () {
     });
 
     it('should spawn the tasks when needed', function () {
+      var grunt = require('grunt');
       var _spawned = 0;
       var task = { mark: function () {}};
-      var grunt = { task: {
-        run: function (t) { _tasks = t; return task; },
-        current: { nameArgs: 'foo:bar' }
-      },
-      util:
-      {spawn: function (cfg) {
+      var myTasks = ['foo', 'bar', 'baz'];
+      grunt.util.spawn = function (cfg) {
         _spawned += 1;
         // In the test we're launched by node. hHence process.argv[0] === 'node'
         assert.equal(cfg.cmd, "node");
-        assert.equal(cfg.opts, {cmd: __dirname});
-        // FIXME: Check the the args is containing our tasks + any command line option passed to the current process
-        assert.equal(1,2);
-      }}
+        assert.ok(cfg.opts.cwd);
+        assert.equal(cfg.opts.cwd, process.cwd());
+        assert.ok(cfg.args.indexOf('foo') !== -1);
+        assert.ok(cfg.args.indexOf('bar') !== -1);
+        assert.ok(cfg.args.indexOf('baz') !== -1);
       };
-      var myTasks = ['foo', 'bar', 'baz'];
 
       utils.launchTask(grunt, myTasks, true);
       assert.equal(_spawned, 1);
-      // myTasks.forEach(function (t, i) {
-      //   assert.equal(_tasks[i], t);
-      // });
-
     });
-
-
 
     it('should prevent a task from blowing up the process', function () {
       var _error;
       var task = { mark: function () {}};
       var errorMsg = 'Error from task !';
-      var grunt = { task: {
+      var myTasks = ['foo'];
+      grunt.task = {
         run: function (t) { throw(errorMsg); },
         current: { nameArgs: 'foo:bar' }
-      },
-      log: {
-        error: function (err) { _error = err; }
-      }
       };
-      var myTasks = ['foo'];
+      grunt.log = {
+        error: function (err) { _error = err; }
+      };
 
       assert.doesNotThrow(
         function () {
