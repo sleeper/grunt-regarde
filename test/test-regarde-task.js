@@ -4,6 +4,7 @@ var grunt = require('grunt');
 var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
 var fs = require('fs');
+var path = require('path');
 
 grunt.task.init([]);
 grunt.config.init({});
@@ -77,16 +78,16 @@ describe('regarde task', function () {
     fs.writeFileSync('fred.txt', '1');
 
     grunt.event.on('regarde:file:changed', function (file) {
-      assert.equal(file, 'fred.txt');
+      assert.equal(file, path.join(__dirname, 'temp', 'fred.txt'));
       done();
     });
 
     grunt.task.run('regarde:fred');
     grunt.task.start();
 
-    // grunt.event.on('regarde:init:fred:done', function () {
-      grunt.file.write('fred.txt', '2');
-    // });
+    grunt.event.on('regarde:init:fred:done', function () {
+      setTimeout(function () {fs.writeFileSync('fred.txt', '2');}, 1000);
+    });
   });
 
   it('should launch a task upon file change when requested');

@@ -20,7 +20,7 @@ module.exports = function (grunt) {
       var tasks = config[t].tasks;
       var spawn = config[t].spawn;
 
-      regarde.add(pattern, tasks, spawn);
+      regarde.add(t, pattern, tasks, spawn);
 
     });
 

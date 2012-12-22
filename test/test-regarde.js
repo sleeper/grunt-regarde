@@ -41,12 +41,19 @@ describe('Regarde', function () {
     });
 
     // var regarde = new Regarde(events, watcher);
-    regarde.add('*.txt', [], true);
+    regarde.add('tname', '*.txt', [], true);
 
     // Simulate a file change.
     watcher.fileChange('fred.txt');
   });
 
+  it('should send event to indicate the watcher is ready', function(done) {
+    events.on('regarde:init:fred:done', function (t) {
+      assert.equal(t, 'fred');
+      done();
+    })
+    regarde.add('fred', '*.txt', ['foo', 'bar'], false);
+  });
 
   it('should send the tasks as part of the event\'s argument', function (done) {
     events.on('regarde:file:changed', function (file, tasks, spawn) {
@@ -60,7 +67,7 @@ describe('Regarde', function () {
     });
 
     // var regarde = new Regarde(events, watcher);
-    regarde.add('*.txt', ['foo', 'bar'], false);
+    regarde.add('tname', '*.txt', ['foo', 'bar'], false);
 
     // Simulate a file change.
     watcher.fileChange('fred.txt');
