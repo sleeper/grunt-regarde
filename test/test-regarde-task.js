@@ -91,4 +91,7 @@ describe('regarde task', function () {
   });
 
   it('should launch a task upon file change when requested');
+  it('should spawn a task upon change when requested');
+  it('shoudl launch/spend individual task when requested');
+  })
 });

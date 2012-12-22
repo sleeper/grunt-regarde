@@ -4,16 +4,21 @@ module.exports = function (grunt) {
   var utils = require('../lib/utils');
   var Regarde = require('../lib/regarde');
 
-  grunt.registerTask('regarde', 'Observe files on the filesystem', function () {
+  grunt.registerTask('regarde', 'Observe files on the filesystem', function (target) {
     var name = this.name;
     var config = grunt.config(name);
     var targets;
 
     config = utils.checkConfig(config);
-    // FIXME: should filter to use only target specified if any
-    targets = Object.keys(config);
+    targets = target ? [target] : Object.keys(config);
 
-    var regarde = new Regarde(grunt.event);
+    var regarde = new Regarde(grunt.event, function (msg, error) {
+      if (error) {
+        grunt.log.error(msg);
+      } else {
+        grunt.log.writeln(msg);
+      }
+    });
 
     targets.forEach(function (t) {
       var pattern = config[t].files;

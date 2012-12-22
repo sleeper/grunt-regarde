@@ -12,7 +12,7 @@ describe('Regarde', function () {
   beforeEach(function () {
     events = new EventEmitter2({delimiter: ':'});
     watcher = new helpers.testWatcher();
-    regarde = new Regarde(events, watcher);
+    regarde = new Regarde(events, function () {}, watcher);
   });
 
   // it('should check each of the target has a correct config');
