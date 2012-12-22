@@ -10,6 +10,7 @@ module.exports = function (grunt) {
     var targets;
 
     config = utils.checkConfig(config);
+    // FIXME: should filter to use only target specified if any
     targets = Object.keys(config);
 
     var regarde = new Regarde(grunt.event);
@@ -24,7 +25,6 @@ module.exports = function (grunt) {
     });
 
     grunt.event.on('all', function (status, filepath, tasks, spawn) {
-      console.log('FRED');
       // Run or spawn the tasks
       utils.launchTasks(grunt, tasks, spawn);
     });

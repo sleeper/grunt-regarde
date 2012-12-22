@@ -73,7 +73,7 @@ describe('regarde task', function () {
   it('should send event when a file is modified', function (done) {
     grunt.log.muted = true;
     grunt.config.init();
-    grunt.config('regarde', {fred: {files: 'fred.txt', events: true }});
+    grunt.config('regarde', {fred: {files: 'fred.txt'}});
     fs.writeFileSync('fred.txt', '1');
 
     grunt.event.on('regarde:file:changed', function (file) {
@@ -84,10 +84,9 @@ describe('regarde task', function () {
     grunt.task.run('regarde:fred');
     grunt.task.start();
 
-    grunt.event.on('regarde:init:fred:done', function () {
-      // fs.writeFileSync('fred.txt', '2');
+    // grunt.event.on('regarde:init:fred:done', function () {
       grunt.file.write('fred.txt', '2');
-    });
+    // });
   });
 
   it('should launch a task upon file change when requested');
