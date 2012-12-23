@@ -26,7 +26,8 @@
       "mkdirp": "~0.3.1",
       "rimraf": "~2.0.1",      
       "grunt-contrib-jshint": "~0.1.0",
-      "eventemitter2": "~0.4.11"
+      "eventemitter2": "~0.4.11",
+      "minimatch": "~0.2.9"
   },
   "engines": {
       "node": ">=0.8.0"

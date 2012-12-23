@@ -85,7 +85,7 @@ describe('Utils', function () {
         current: { nameArgs: 'foo:bar' }
       };
 
-      utils.launchTask(grunt, myTasks, false);
+      utils.launchTasks(grunt, myTasks, false);
       assert.equal(_tasks.length, 3);
       myTasks.forEach(function (t, i) {
         assert.equal(_tasks[i], t);
@@ -97,6 +97,10 @@ describe('Utils', function () {
       var grunt = require('grunt');
       var _spawned = 0;
       var myTasks = ['foo', 'bar', 'baz'];
+      var p = {
+        stdout: { on : function (){}},
+        stderr: { on: function () {}}
+      };
       grunt.util.spawn = function (cfg) {
         _spawned += 1;
         // In the test we're launched by node. hHence process.argv[0] === 'node'
@@ -106,9 +110,10 @@ describe('Utils', function () {
         assert.ok(cfg.args.indexOf('foo') !== -1);
         assert.ok(cfg.args.indexOf('bar') !== -1);
         assert.ok(cfg.args.indexOf('baz') !== -1);
+        return p;
       };
 
-      utils.launchTask(grunt, myTasks, true);
+      utils.launchTasks(grunt, myTasks, true);
       assert.equal(_spawned, 1);
     });
 
@@ -126,7 +131,7 @@ describe('Utils', function () {
 
       assert.doesNotThrow(
         function () {
-        utils.launchTask(grunt, myTasks, false);
+        utils.launchTasks(grunt, myTasks, false);
       }
       );
       assert.equal(_error, errorMsg);

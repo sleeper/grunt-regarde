@@ -3,6 +3,7 @@ var events = require('events');
 var path = require('path');
 var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
+var minimatch = require("minimatch")
 var util = require('util');
 
 // top level exports
@@ -33,19 +34,33 @@ helpers.directory = function directory(dir) {
   };
 };
 
-helpers.testWatcher = function () {
+helpers.testWatcher = function (pattern, cb) {
+  cb.bind(this)();
+  helpers.testWatcher.add_pattern(pattern, this);
+};
 
+helpers.testWatcher.registry = {};
+
+helpers.testWatcher.add_pattern = function add_pattern(pattern, watcher) {
+  helpers.testWatcher.registry[pattern] = watcher;
 };
 
 util.inherits(helpers.testWatcher, events.EventEmitter);
 
 helpers.testWatcher.prototype.add = function add(pattern, cb) {
   cb.bind(this)();
+  helpers.testWatcher.add_pattern(pattern, this);
 };
 
 // Simulate a file change
 //
-helpers.testWatcher.prototype.fileChange = function fileChange(file) {
-  this.emit('changed', file);
-  this.emit('all', 'changed', file);
+helpers.testWatcher.fileChange = function fileChange(file) {
+  // Find the pattern that match with this file and fire
+  Object.keys(helpers.testWatcher.registry).forEach(function (pattern) {
+    if (minimatch(file, pattern)) {
+      var watcher = helpers.testWatcher.registry[pattern];
+      // watcher.emit('changed', file);
+      watcher.emit('all', 'changed', file);
+    }
+  });
 };

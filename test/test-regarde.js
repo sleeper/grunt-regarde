@@ -11,26 +11,48 @@ describe('Regarde', function () {
 
   beforeEach(function () {
     events = new EventEmitter2({delimiter: ':'});
-    watcher = new helpers.testWatcher();
-    regarde = new Regarde(events, function () {}, watcher);
+    // watcher = new helpers.testWatcher();
+    regarde = new Regarde(events, function () {}, helpers.testWatcher);
   });
 
-  // it('should check each of the target has a correct config');
-  // it('should filter tasks to keep only strings and arrays');
+  afterEach(function() {
+    events.removeAllListeners();
+  });
 
-  // it('should emit events if no task is given', function () {
-  //   grunt.log.muted = true;
-  //   grunt.config.init();
-  //   grunt.config('regarde', {fred: {files: '*.txt'}, foo: {files: '*.foo'}});
-  //   grunt.file.write('fred.txt', '1');
 
-  //   var watcher = new helpers.testWatcher();
+  it('should send event when something happened to a file', function (done) {
+    events.on('regarde:file', function (status,file, tasks, spawn) {
+      assert.equal(status, 'changed');
+      assert.equal(file, 'fred.txt');
+      assert.equal(tasks.length, 0);
+      assert.ok(spawn);
+      done();
+    });
 
-  //   var r = new Regarde(grunt, watcher);
-  //   assert.equal(grunt.config('regarde').fred.events, true);
-  //   assert.equal(grunt.config('regarde').foo.events, true);
+    // var regarde = new Regarde(events, watcher);
+    regarde.add('tname', '*.txt', [], true);
 
-  // });
+    // Simulate a file change.
+    helpers.testWatcher.fileChange('fred.txt');
+
+  });
+
+  it('should send event restricted to watcher name', function (done) {
+    events.on('regarde:fred:file', function (status,file, tasks, spawn) {
+      assert.equal(status, 'changed');
+      assert.equal(file, 'fred.txt');
+      assert.equal(tasks.length, 0);
+      assert.ok(spawn);
+      done();
+    });
+
+    // var regarde = new Regarde(events, watcher);
+    regarde.add('fred', '*.txt', [], true);
+
+    // Simulate a file change.
+    helpers.testWatcher.fileChange('fred.txt');
+
+  });
 
   it('should send event when a file is modified', function (done) {
     events.on('regarde:file:changed', function (file, tasks, spawn) {
@@ -44,7 +66,7 @@ describe('Regarde', function () {
     regarde.add('tname', '*.txt', [], true);
 
     // Simulate a file change.
-    watcher.fileChange('fred.txt');
+    helpers.testWatcher.fileChange('fred.txt');
   });
 
   it('should send event to indicate the watcher is ready', function(done) {
@@ -53,6 +75,23 @@ describe('Regarde', function () {
       done();
     })
     regarde.add('fred', '*.txt', ['foo', 'bar'], false);
+  });
+
+  it('should send events only to the relevant listener', function (done) {
+    events.on('regarde:file:changed', function (file, tasks, spawn) {
+      assert.equal(file, 'fred.txt');
+      assert.ok(tasks);
+      assert.equal(tasks.length, 1);
+      assert.equal(tasks[0], 'fred');
+      done();
+    });
+
+    // var regarde = new Regarde(events, watcher);
+    regarde.add('fred', 'fred.txt', ['fred']);
+    regarde.add('foo', 'foo.txt', ['foo']);
+
+    // Simulate a file change.
+    helpers.testWatcher.fileChange('fred.txt');
   });
 
   it('should send the tasks as part of the event\'s argument', function (done) {
@@ -70,6 +109,6 @@ describe('Regarde', function () {
     regarde.add('tname', '*.txt', ['foo', 'bar'], false);
 
     // Simulate a file change.
-    watcher.fileChange('fred.txt');
+    helpers.testWatcher.fileChange('fred.txt');
   });
 });

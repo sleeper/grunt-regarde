@@ -33,6 +33,11 @@ var directory = function directory(dir) {
 describe('regarde task', function () {
   before(directory('temp'));
 
+  afterEach(function () {
+    grunt.event.removeAllListeners();
+    grunt.task.clearQueue();
+  });
+
   it('should check each of the target has a correct config');
   it('should forbid config with no task and events false');
   it('should filter tasks to keep only strings and arrays');
@@ -90,8 +95,27 @@ describe('regarde task', function () {
     });
   });
 
-  it('should launch a task upon file change when requested');
+  it('should launch a task upon file change when requested', function (done) {
+    grunt.log.muted = true;
+    grunt.config.init();
+    grunt.config('regarde', {fred: {files: 'fred.txt', tasks: ['changed']}});
+    fs.writeFileSync('fred.txt', '1');
+
+    grunt.registerTask('changed', '', function () {
+      console.log('FRED: launched');
+      done();
+    });
+
+    grunt.task.run('regarde:fred');
+    grunt.task.start();
+
+    grunt.event.on('regarde:init:fred:done', function () {
+      console.log('FRED: about to change file');
+      setTimeout(function () {fs.writeFileSync('fred.txt', '2');}, 1000);
+    });
+
+  });
+
   it('should spawn a task upon change when requested');
-  it('shoudl launch/spend individual task when requested');
-  })
+  it('should launch/spend individual task when requested');
 });
