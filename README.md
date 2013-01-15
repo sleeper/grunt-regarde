@@ -45,7 +45,6 @@ The following events will be emitted:
 * `regarde:file` with status (`changed`, `added`, `deleted`), file path, tasks and whether or not the tasks will be spawn, as parameter.
 * `regarde:<name>:file`, where `<name>` is the name of the regarde section considered (i.e. `css` or `js` in the bellow example), with status (`changed`, `added`, `deleted`), file path, tasks and whether or not the tasks will be spawn, as parameter.
 * `regarde:<name>:file:changed`, `regarde:<name>:file:added`, `regarde:<name>:file:deleted` where `<name>` is the name of the regarde section considered (i.e. `css` or `js` in the bellow example), with status (`changed`, `added`, `deleted`), file path, tasks and whether or not the tasks will be spawn, as parameter.
-Whether or not `regarde` should send out events each time a file chnage.
 
 ### Examples
 ```js
