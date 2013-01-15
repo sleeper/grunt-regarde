@@ -3,7 +3,7 @@
 module.exports = function (grunt) {
   var utils = require('../lib/utils');
   var Regarde = require('../lib/regarde');
-  var initialized = false;
+  // var initialized = false;
 
   grunt.registerTask('regarde', 'Observe files on the filesystem', function (target) {
     var name = this.name;
@@ -11,6 +11,7 @@ module.exports = function (grunt) {
     var config = grunt.config(name);
     var done = this.async();
     var targets;
+    var initialized = this.flags["__initialized__"];
 
     if (initialized) {
       return;
@@ -27,12 +28,11 @@ module.exports = function (grunt) {
         grunt.log.writeln(msg);
       }
     });
-console.log('FRED: targets -> ' + targets);
+
     targets.forEach(function (t) {
       var pattern = config[t].files;
       var tasks = config[t].tasks;
       var spawn = config[t].spawn;
-console.log('FRED: About to call add for ' + t);
       regarde.add(t, pattern, tasks, spawn);
 
     });
@@ -45,7 +45,7 @@ console.log('FRED: About to call add for ' + t);
       }
 
      // Enqueue the watch task, so that it loops.
-      grunt.task.run(nameArgs).mark();
+      grunt.task.run(nameArgs + ":__initialized__").mark();
       done();
     });
 

@@ -102,7 +102,6 @@ describe('regarde task', function () {
     fs.writeFileSync('fred.txt', '1');
 
     grunt.registerTask('changed', '', function () {
-      console.log('FRED: launched');
       done();
     });
 
@@ -110,7 +109,6 @@ describe('regarde task', function () {
     grunt.task.start();
 
     grunt.event.on('regarde:init:fred:done', function () {
-      console.log('FRED: about to change file');
       setTimeout(function () {fs.writeFileSync('fred.txt', '2');}, 1000);
     });
 
