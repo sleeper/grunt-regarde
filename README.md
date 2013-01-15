@@ -37,17 +37,15 @@ Default: false
 
 Whether or not the tasks will be launched in a spawned subprocess. Note that in this case, the spawned task has no information on which file changed.
 
-#### events
-Type: `boolean`
-Default: false
+### Events
 
+`grunt-regarde` will emit event each time a file is changed, added or deleted.
+The following events will be emitted:
+* `regarde:file:changed`, `regarde:file:added`, `regarde:file:deleted` with file path, tasks and whether or not the tasks will be spawn, as parameter.
+* `regarde:file` with status (`changed`, `added`, `deleted`), file path, tasks and whether or not the tasks will be spawn, as parameter.
+* `regarde:<name>:file`, where `<name>` is the name of the regarde section considered (i.e. `css` or `js` in the bellow example), with status (`changed`, `added`, `deleted`), file path, tasks and whether or not the tasks will be spawn, as parameter.
+* `regarde:<name>:file:changed`, `regarde:<name>:file:added`, `regarde:<name>:file:deleted` where `<name>` is the name of the regarde section considered (i.e. `css` or `js` in the bellow example), with status (`changed`, `added`, `deleted`), file path, tasks and whether or not the tasks will be spawn, as parameter.
 Whether or not `regarde` should send out events each time a file chnage.
-If this option is `true`, `regarde` will launch the following events:
-* `file:changed`
-* `file:deleted`
-* `file:added`
-
-with the name of the file in parameter.
 
 ### Examples
 ```js

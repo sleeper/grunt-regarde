@@ -50,8 +50,5 @@ module.exports = function (grunt) {
       grunt.task.run(nameArgs + ':__initialized__').mark();
       done();
     });
-
-    // Keep the process alive
-    // setInterval(function () {}, 250);
   });
 };
