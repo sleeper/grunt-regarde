@@ -38,7 +38,6 @@ describe('regarde task', function () {
     grunt.task.clearQueue();
   });
 
-  it('should check each of the target has a correct config');
   it('should forbid config with no task and events false');
   it('should filter tasks to keep only strings and arrays');
   it('should emit events if no task is given');
@@ -53,9 +52,6 @@ describe('regarde task', function () {
     var changed = [];
 
     grunt.event.on('regarde:file:changed', function (file) {
-      // assert((file === path.join(__dirname, 'temp', 'fred.txt')) ||
-      //   (file === path.join(__dirname, 'temp', 'john.txt')));
-
       assert(file.match(/(fred|john)\.txt$/));
       changed.push(file);
       if (changed.length === 2) {
@@ -117,5 +113,4 @@ describe('regarde task', function () {
   });
 
   it('should spawn a task upon change when requested');
-  it('should launch/spend individual task when requested');
 });

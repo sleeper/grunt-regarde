@@ -3,7 +3,7 @@ var events = require('events');
 var path = require('path');
 var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
-var minimatch = require("minimatch")
+var minimatch = require('minimatch');
 var util = require('util');
 
 // top level exports
@@ -36,12 +36,12 @@ helpers.directory = function directory(dir) {
 
 helpers.testWatcher = function (pattern, cb) {
   cb.bind(this)();
-  helpers.testWatcher.add_pattern(pattern, this);
+  helpers.testWatcher.addPattern(pattern, this);
 };
 
 helpers.testWatcher.registry = {};
 
-helpers.testWatcher.add_pattern = function add_pattern(pattern, watcher) {
+helpers.testWatcher.addPattern = function addPattern(pattern, watcher) {
   helpers.testWatcher.registry[pattern] = watcher;
 };
 
@@ -49,7 +49,7 @@ util.inherits(helpers.testWatcher, events.EventEmitter);
 
 helpers.testWatcher.prototype.add = function add(pattern, cb) {
   cb.bind(this)();
-  helpers.testWatcher.add_pattern(pattern, this);
+  helpers.testWatcher.addPattern(pattern, this);
 };
 
 // Simulate a file change

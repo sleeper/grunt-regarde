@@ -45,6 +45,8 @@ module.exports = function (grunt) {
       }
 
      // Enqueue the watch task, so that it loops.
+     // We're appending a "private" flag that will allow us to determine wether
+     // or not we should initialize a dedicated listener for the task or not
       grunt.task.run(nameArgs + ':__initialized__').mark();
       done();
     });

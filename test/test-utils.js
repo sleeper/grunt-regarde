@@ -98,8 +98,8 @@ describe('Utils', function () {
       var _spawned = 0;
       var myTasks = ['foo', 'bar', 'baz'];
       var p = {
-        stdout: { on : function (){}},
-        stderr: { on: function () {}}
+        stdout: { on : function () {} },
+        stderr: { on: function () {} }
       };
       grunt.util.spawn = function (cfg) {
         _spawned += 1;
