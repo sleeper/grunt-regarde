@@ -11,7 +11,7 @@ module.exports = function (grunt) {
     var config = grunt.config(name);
     var done = this.async();
     var targets;
-    var initialized = this.flags["__initialized__"];
+    var initialized = this.flags.__initialized__;
 
     if (initialized) {
       return;
@@ -45,7 +45,7 @@ module.exports = function (grunt) {
       }
 
      // Enqueue the watch task, so that it loops.
-      grunt.task.run(nameArgs + ":__initialized__").mark();
+      grunt.task.run(nameArgs + ':__initialized__').mark();
       done();
     });
 
