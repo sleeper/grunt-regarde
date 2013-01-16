@@ -41,16 +41,23 @@ module.exports = function (grunt) {
 
     });
 
-    grunt.event.on('regarde:file', function (status, name, filepath, tasks, spawn) {
-      // Run or spawn the tasks
-      grunt.verbose.writeln('File ' + filepath + ' ' + status + '. Tasks: ' + tasks);
-      if (tasks) {
-        utils.launchTasks(grunt, tasks, spawn);
+    var modified = {};
+    var launchTasks = grunt.util._.debounce(function (t, spawn, changed) {
+      if (t) {
+        utils.launchTasks(grunt, t, spawn, changed);
       }
 
      // Enqueue the regarde task, so that it loops.
       grunt.task.run(nameArgs).mark();
-      done();
+      done();      
+    }, 250);
+
+    grunt.event.on('regarde:file', function (status, name, filepath, tasks, spawn) {
+      // Run or spawn the tasks
+      grunt.verbose.writeln('File ' + filepath + ' ' + status + '. Tasks: ' + tasks);
+      modified[name] = modified[name] || [];
+      modified[name].push(filepath);
+      launchTasks(tasks, spawn, modified[name]);
     });
   });
 };
