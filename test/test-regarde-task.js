@@ -51,7 +51,8 @@ describe('regarde task', function () {
 
     var changed = [];
 
-    grunt.event.on('regarde:file:changed', function (file) {
+    grunt.event.on('regarde:file:changed', function (name, file) {
+      assert.equal(name, "fred");
       assert(file.match(/(fred|john)\.txt$/));
       changed.push(file);
       if (changed.length === 2) {
@@ -81,7 +82,8 @@ describe('regarde task', function () {
     grunt.config('regarde', {fred: {files: 'fred.txt'}});
     fs.writeFileSync('fred.txt', '1');
 
-    grunt.event.on('regarde:file:changed', function (file) {
+    grunt.event.on('regarde:file:changed', function (name, file) {
+      assert.equal(name, "fred");
       assert.equal(file, path.join(__dirname, 'temp', 'fred.txt'));
       done();
     });

@@ -41,7 +41,7 @@ module.exports = function (grunt) {
 
     });
 
-    grunt.event.on('regarde:file', function (status, filepath, tasks, spawn) {
+    grunt.event.on('regarde:file', function (status, name, filepath, tasks, spawn) {
       // Run or spawn the tasks
       grunt.verbose.writeln('File ' + filepath + ' ' + status + '. Tasks: ' + tasks);
       if (tasks) {

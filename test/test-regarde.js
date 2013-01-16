@@ -19,7 +19,7 @@ describe('Regarde', function () {
 
 
   it('should send event when something happened to a file', function (done) {
-    events.on('regarde:file', function (status, file, tasks, spawn) {
+    events.on('regarde:file', function (status, name, file, tasks, spawn) {
       assert.equal(status, 'changed');
       assert.equal(file, 'fred.txt');
       assert.equal(tasks.length, 0);
@@ -51,7 +51,7 @@ describe('Regarde', function () {
   });
 
   it('should send event when a file is modified', function (done) {
-    events.on('regarde:file:changed', function (file, tasks, spawn) {
+    events.on('regarde:file:changed', function (name, file, tasks, spawn) {
       assert.equal(file, 'fred.txt');
       assert.equal(tasks.length, 0);
       assert.ok(spawn);
@@ -73,7 +73,7 @@ describe('Regarde', function () {
   });
 
   it('should send events only to the relevant listener', function (done) {
-    events.on('regarde:file:changed', function (file, tasks) {
+    events.on('regarde:file:changed', function (name, file, tasks) {
       assert.equal(file, 'fred.txt');
       assert.ok(tasks);
       assert.equal(tasks.length, 1);
@@ -89,7 +89,7 @@ describe('Regarde', function () {
   });
 
   it('should send the tasks as part of the event\'s argument', function (done) {
-    events.on('regarde:file:changed', function (file, tasks, spawn) {
+    events.on('regarde:file:changed', function (name, file, tasks, spawn) {
       assert.equal(file, 'fred.txt');
       assert(tasks);
       assert.equal(tasks.length, 2);
