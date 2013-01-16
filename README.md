@@ -1,4 +1,4 @@
-# grunt-contrib-regarde [![Build Status](https://secure.travis-ci.org/yeoman/grunt-contrib-regarde.png?branch=master)](http://travis-ci.org/yeoman/grunt-contrib-regarde)
+# grunt-contrib-regarde [![Build Status](https://secure.travis-ci.org/yeoman/grunt-regarde.png?branch=master)](http://travis-ci.org/yeoman/grunt-regarde)
 
 > Observe files for changes and take described action.
 
@@ -7,7 +7,7 @@
 If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide, as it explains how to create a [gruntfile][Getting Started] as well as install and use grunt plugins. Once you're familiar with that process, install this plugin with this command:
 
 ```shell
-npm install grunt-contrib-regarde --save-dev
+npm install grunt-regarde --save-dev
 ```
 
 [grunt]: http://gruntjs.com/

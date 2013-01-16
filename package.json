@@ -1,16 +1,16 @@
 {
-  "name": "grunt-contrib-regarde",
+  "name": "grunt-regarde",
   "version": "0.0.1",
   "description": "Observe a set of files for changes",
-  "homepage": "https://github.com/sleeper/grunt-contrib-regarde",
-  "bugs": "https://github.com/sleeper/grunt-contrib-regarde/issues",
+  "homepage": "https://github.com/sleeper/grunt-regarde",
+  "bugs": "https://github.com/sleeper/grunt-regarde/issues",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha test/test-*.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sleeper/grunt-contrib-regarde.git"
+    "url": "https://github.com/sleeper/grunt-regarde.git"
   },
   "keywords": [
     "watch",
@@ -24,7 +24,7 @@
       "grunt": "~0.4.0",
       "mocha": "~1.7.4",
       "mkdirp": "~0.3.1",
-      "rimraf": "~2.0.1",      
+      "rimraf": "~2.0.1",
       "grunt-contrib-jshint": "~0.1.0",
       "eventemitter2": "~0.4.11",
       "minimatch": "~0.2.9"
