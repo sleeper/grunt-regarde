@@ -63,6 +63,7 @@ describe('regarde task', function () {
       }
     });
 
+    grunt.task.run('regardeReset');
     grunt.task.run('regarde');
     grunt.task.start();
 
@@ -85,6 +86,7 @@ describe('regarde task', function () {
       done();
     });
 
+    grunt.task.run('regardeReset');
     grunt.task.run('regarde:fred');
     grunt.task.start();
 
@@ -103,6 +105,7 @@ describe('regarde task', function () {
       done();
     });
 
+    grunt.task.run('regardeReset');
     grunt.task.run('regarde:fred');
     grunt.task.start();
 

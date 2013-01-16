@@ -3,7 +3,12 @@
 module.exports = function (grunt) {
   var utils = require('../lib/utils');
   var Regarde = require('../lib/regarde');
-  // var initialized = false;
+  var initialized = false;
+
+  grunt.registerTask('regardeReset', 'Reset the initislized status .. For test purpose ONLY', function (target) {
+    grunt.log.writeln("Resetting initialized state");
+    initialized = false;
+  });
 
   grunt.registerTask('regarde', 'Observe files on the filesystem', function (target) {
     var name = this.name;
@@ -11,7 +16,6 @@ module.exports = function (grunt) {
     var config = grunt.config(name);
     var done = this.async();
     var targets;
-    var initialized = this.flags.__initialized__;
 
     if (initialized) {
       return;
@@ -44,10 +48,8 @@ module.exports = function (grunt) {
         utils.launchTasks(grunt, tasks, spawn);
       }
 
-     // Enqueue the watch task, so that it loops.
-     // We're appending a "private" flag that will allow us to determine wether
-     // or not we should initialize a dedicated listener for the task or not
-      grunt.task.run(nameArgs + ':__initialized__').mark();
+     // Enqueue the regarde task, so that it loops.
+      grunt.task.run(nameArgs).mark();
       done();
     });
   });
