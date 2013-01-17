@@ -1,6 +1,6 @@
 {
   "name": "grunt-regarde",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Observe a set of files for changes",
   "homepage": "https://github.com/sleeper/grunt-regarde",
   "bugs": "https://github.com/sleeper/grunt-regarde/issues",
