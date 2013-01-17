@@ -43,13 +43,17 @@ module.exports = function (grunt) {
 
     var modified = {};
     var launchTasks = grunt.util._.debounce(function (t, spawn, changed) {
+      // Copy the array by value
+      var lchanged = changed.slice(0);
+      changed.length = 0;
+
       if (t) {
-        utils.launchTasks(grunt, t, spawn, changed);
+        utils.launchTasks(grunt, t, spawn, lchanged);
       }
 
      // Enqueue the regarde task, so that it loops.
       grunt.task.run(nameArgs).mark();
-      done();      
+      done();
     }, 250);
 
     grunt.event.on('regarde:file', function (status, name, filepath, tasks, spawn) {

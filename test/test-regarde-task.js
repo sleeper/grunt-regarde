@@ -84,7 +84,7 @@ describe('regarde task', function () {
 
     grunt.event.on('regarde:file:changed', function (name, file) {
       assert.equal(name, "fred");
-      assert.equal(file, path.join(__dirname, 'temp', 'fred.txt'));
+      assert(file.match(/fred\.txt$/));
       done();
     });
 
