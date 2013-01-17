@@ -30,6 +30,7 @@ This lists patterns describing files to observe. This can be either a string or 
 Type: `String|Array`
 
 Defines the tasks to run when an observed file change. Note that this is optional (in case it is missing, an implicit `events: true` will be inserted in the configuration)
+The tasks will be called with the list of changed files to consider as args (i.e. accessible as `this.args`).
 
 #### spawn
 Type: `boolean`
@@ -41,8 +42,8 @@ Whether or not the tasks will be launched in a spawned subprocess. Note that in 
 
 `grunt-regarde` will emit event each time a file is changed, added or deleted.
 The following events will be emitted:
-* `regarde:file:changed`, `regarde:file:added`, `regarde:file:deleted` with file path, tasks and whether or not the tasks will be spawn, as parameter.
-* `regarde:file` with status (`changed`, `added`, `deleted`), file path, tasks and whether or not the tasks will be spawn, as parameter.
+* `regarde:file:changed`, `regarde:file:added`, `regarde:file:deleted` with name of the section config, file path, tasks and whether or not the tasks will be spawn, as parameter.
+* `regarde:file` with status (`changed`, `added`, `deleted`), name of the section config, file path, tasks and whether or not the tasks will be spawn, as parameter.
 * `regarde:<name>:file`, where `<name>` is the name of the regarde section considered (i.e. `css` or `js` in the bellow example), with status (`changed`, `added`, `deleted`), file path, tasks and whether or not the tasks will be spawn, as parameter.
 * `regarde:<name>:file:changed`, `regarde:<name>:file:added`, `regarde:<name>:file:deleted` where `<name>` is the name of the regarde section considered (i.e. `css` or `js` in the bellow example), with status (`changed`, `added`, `deleted`), file path, tasks and whether or not the tasks will be spawn, as parameter.
 
