@@ -16,7 +16,7 @@
     "watch",
     "files"
   ],
-  "author": "Chrome Developer Relations",
+  "author": "Frederick Ros",
   "main": "Gruntfile.js",
   "dependencies": {
     "gaze" : "~0.3.1"
