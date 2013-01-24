@@ -2,21 +2,22 @@
   "name": "grunt-regarde",
   "version": "0.1.0",
   "description": "Observe a set of files for changes",
-  "homepage": "https://github.com/sleeper/grunt-regarde",
-  "bugs": "https://github.com/sleeper/grunt-regarde/issues",
+  "homepage": "https://github.com/yeoman/grunt-regarde",
+  "bugs": "https://github.com/yeoman/grunt-regarde/issues",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha test/test-*.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sleeper/grunt-regarde.git"
+    "url": "https://github.com/yeoman/grunt-regarde.git"
   },
   "keywords": [
     "watch",
     "files"
   ],
-  "author": "Frederick Ros",
+  "author": "Chrome Developer Relations",
+  "main": "Gruntfile.js",
   "dependencies": {
     "gaze" : "~0.3.1"
   },
@@ -32,5 +33,5 @@
   "engines": {
       "node": ">=0.8.0"
   },
-  "license": "MIT"
+  "license": "BSD"
 }
