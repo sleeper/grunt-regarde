@@ -34,6 +34,7 @@ describe('regarde task', function () {
   before(directory('temp'));
 
   afterEach(function () {
+    grunt.task.run('regardeReset');
     grunt.event.removeAllListeners();
     grunt.task.clearQueue();
   });
@@ -60,11 +61,11 @@ describe('regarde task', function () {
         assert(changed[0].match(/fred\.txt$/));
         assert(changed[1].match(/john\.txt$/));
         assert(true);
+        grunt.event.emit('regarde:close');
         done();
       }
     });
 
-    grunt.task.run('regardeReset');
     grunt.task.run('regarde');
     grunt.task.start();
 
@@ -85,6 +86,7 @@ describe('regarde task', function () {
     grunt.event.on('regarde:file:changed', function (name, file) {
       assert.equal(name, "fred");
       assert(file.match(/fred\.txt$/));
+      grunt.event.emit('regarde:close');
       done();
     });
 
@@ -104,6 +106,7 @@ describe('regarde task', function () {
     fs.writeFileSync('fred.txt', '1');
 
     grunt.registerTask('changed', '', function () {
+      grunt.event.emit('regarde:close');
       done();
     });
 
