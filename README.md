@@ -34,7 +34,7 @@ This lists patterns describing files to observe.
 Type: `String|Array`
 
 Defines the tasks to run when an observed file change. Note that this is optional (in case it is missing, an implicit `events: true` will be inserted in the configuration)
-The tasks will be called with the list of changed files to consider as args (i.e. accessible as `this.args`).
+Tasks called (if they are not spawned), can access to the list of changed file through the array `grunt.regarde.changed`.
 
 #### spawn
 

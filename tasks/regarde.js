@@ -5,8 +5,8 @@ module.exports = function (grunt) {
   var Regarde = require('../lib/regarde');
   var initialized = false;
 
-  grunt.registerTask('regardeReset', 'Reset the initialized status .. For test purpose ONLY', function (target) {
-    grunt.log.writeln("Resetting initialized state");
+  grunt.registerTask('regardeReset', 'Reset the initialized status .. For test purpose ONLY', function () {
+    grunt.log.writeln('Resetting initialized state');
     initialized = false;
   });
 

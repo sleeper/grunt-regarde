@@ -136,6 +136,22 @@ describe('Utils', function () {
       );
       assert.equal(_error, errorMsg);
     });
+
+    it('should convey files changed through a variable of grunt', function (done) {
+      var changedFiles = ['bar', 'baz', 'boo'];
+      var task = { mark: function () {}};
+      grunt.task = {
+        run: function () {
+          assert.equal(grunt.regarde.changed, changedFiles);
+          done();
+          return task;
+        },
+        current: { nameArgs: 'foo:bar' }
+      };
+
+      utils.launchTasks(grunt, ['foo'], false, changedFiles);
+
+    });
   });
 
 });

@@ -4,7 +4,6 @@ var grunt = require('grunt');
 var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
 var fs = require('fs');
-var path = require('path');
 
 grunt.task.init([]);
 grunt.config.init({});
@@ -53,7 +52,7 @@ describe('regarde task', function () {
     var changed = [];
 
     grunt.event.on('regarde:file:changed', function (name, file) {
-      assert.equal(name, "fred");
+      assert.equal(name, 'fred');
       assert(file.match(/(fred|john)\.txt$/));
       changed.push(file);
       if (changed.length === 2) {
@@ -84,7 +83,7 @@ describe('regarde task', function () {
     fs.writeFileSync('fred.txt', '1');
 
     grunt.event.on('regarde:file:changed', function (name, file) {
-      assert.equal(name, "fred");
+      assert.equal(name, 'fred');
       assert(file.match(/fred\.txt$/));
       grunt.event.emit('regarde:close');
       done();
